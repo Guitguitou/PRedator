@@ -1,0 +1,25 @@
+{
+  "action": "created",
+  "comment": {
+    "body": "Ceci est un commentaire de révision de pull request.",
+    "id": 1,
+    "user": {
+      "login": "utilisateur"
+    }
+  },
+  "pull_request": {
+    "number": 1,
+    "user": {
+      "login": "auteur"
+    }
+  },
+  "repository": {
+    "name": "nom-du-repo",
+    "owner": {
+      "login": "propriétaire"
+    }
+  },
+  "installation": {
+    "id": 2
+  }
+} 

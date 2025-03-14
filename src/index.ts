@@ -9,18 +9,18 @@ export default (app: Probot) => {
     console.log("Comment body:", comment);
 
     // Envoyer le commentaire à ChatGPT
-    const response = await axios.post("https://api.openai.com/v1/engines/davinci-codex/completions", {
-      prompt: `Voici le commentaire d'un utilisateur sur la pull request : "${comment}". Fais moi une suggestion concise pour améliorer le code.`,
-      max_tokens: 150,
-      temperature: 0.7,
-    }, {
-      headers: {
-        'Authorization': `Bearer YOUR_OPENAI_API_KEY`,
-        'Content-Type': 'application/json'
-      }
-    });
+    // const response = await axios.post("https://api.openai.com/v1/engines/davinci-codex/completions", {
+    //   prompt: `Voici le commentaire d'un utilisateur sur la pull request : "${comment}". Fais moi une suggestion concise pour améliorer le code.`,
+    //   max_tokens: 150,
+    //   temperature: 0.7,
+    // }, {
+    //   headers: {
+    //     'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+    //     'Content-Type': 'application/json'
+    //   }
+    // });
 
-    const suggestions = response.data.choices[0].text.trim();
+    const suggestions = "coucou ceci est une suggestion";
     console.log("Suggestions from ChatGPT:", suggestions);
 
     // Poster les suggestions en tant que commentaire
