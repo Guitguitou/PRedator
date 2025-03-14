@@ -8,7 +8,7 @@ export default (app: Probot) => {
 
     // Envoyer le commentaire à ChatGPT
     const response = await axios.post("https://api.openai.com/v1/engines/davinci-codex/completions", {
-      prompt: `Voici un commentaire de pull request : "${comment}". Pouvez-vous faire des suggestions pour l'améliorer ?`,
+      prompt: `Voici un commentaire de pull request : "${comment}". Fais moi une suggestion concise pour améliorer le code.`,
       max_tokens: 150,
       temperature: 0.7,
     }, {
