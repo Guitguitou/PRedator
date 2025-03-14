@@ -33,7 +33,7 @@ export default (app: Probot) => {
       repo,
       pull_number: pullNumber,
       comment_id: commentId,
-      body: `Suggestions de ChatGPT :\n${suggestions}`,
+      body: `Suggestions test de ChatGPT :\n${suggestions}`,
     });
     console.log("Reply posted with suggestions");
   });
