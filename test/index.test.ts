@@ -22,7 +22,7 @@ const privateKey = fs.readFileSync(
 );
 
 const payload = JSON.parse(
-  fs.readFileSync(path.join(__dirname, "fixtures/issues.opened.json"), "utf-8"),
+  fs.readFileSync(path.join(__dirname, "fixtures/pull_request_review_comment.created.json"), "utf-8"),
 );
 
 describe("My Probot app", () => {
@@ -43,26 +43,26 @@ describe("My Probot app", () => {
     probot.load(myProbotApp);
   });
 
-  test("creates a comment when an issue is opened", async () => {
+  test("creates a comment when a pull request review comment is created", async () => {
     const mock = nock("https://api.github.com")
       // Test that we correctly return a test token
       .post("/app/installations/2/access_tokens")
       .reply(200, {
         token: "test",
         permissions: {
-          issues: "write",
+          pull_requests: "write",
         },
       })
 
       // Test that a comment is posted
-      .post("/repos/hiimbex/testing-things/issues/1/comments", (body: any) => {
+      .post("/repos/hiimbex/testing-things/pulls/1/comments", (body: any) => {
         expect(body).toMatchObject(issueCreatedBody);
         return true;
       })
       .reply(200);
 
     // Receive a webhook event
-    await probot.receive({ name: "issues", payload });
+    await probot.receive({ name: "pull_request_review_comment", payload });
 
     expect(mock.pendingMocks()).toStrictEqual([]);
   });
