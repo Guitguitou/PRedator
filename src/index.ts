@@ -28,10 +28,9 @@ export default (app: Probot) => {
     console.log("Suggestions from ChatGPT:", suggestions);
 
     // Répondre au commentaire existant
-    await context.octokit.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/comments/{comment_id}/replies', {
-      owner,
-      repo,
-      pull_number: pullNumber,
+    await context.octokit.request('POST /repos/{owner}/{repo}/pulls/comments/{comment_id}/replies', {
+      owner: owner,
+      repo: repo,
       comment_id: commentId,
       body: `Suggestions test de ChatGPT :\n${suggestions}`,
     });
