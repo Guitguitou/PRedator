@@ -4,7 +4,9 @@ import axios from "axios";
 export default (app: Probot) => {
 
   app.on("pull_request_review_comment.created", async (context) => {
+    console.log("Received a pull request review comment event");
     const comment = context.payload.comment.body;
+    console.log("Comment body:", comment);
 
     // Envoyer le commentaire à ChatGPT
     const response = await axios.post("https://api.openai.com/v1/engines/davinci-codex/completions", {
@@ -19,12 +21,14 @@ export default (app: Probot) => {
     });
 
     const suggestions = response.data.choices[0].text.trim();
+    console.log("Suggestions from ChatGPT:", suggestions);
 
     // Poster les suggestions en tant que commentaire
     const issueComment = context.issue({
       body: `Suggestions de ChatGPT :\n${suggestions}`,
     });
     await context.octokit.issues.createComment(issueComment);
+    console.log("Comment posted with suggestions");
   });
 
   // For more information on building apps:
