@@ -6,6 +6,10 @@ export default (app: Probot) => {
   app.on("pull_request_review_comment.created", async (context) => {
     console.log("Received a pull request review comment event");
     const comment = context.payload.comment.body;
+    const commentId = context.payload.comment.id;
+    const owner = context.payload.repository.owner.login;
+    const repo = context.payload.repository.name;
+    const pullNumber = context.payload.pull_request.number;
     console.log("Comment body:", comment);
 
     // Envoyer le commentaire à ChatGPT
@@ -23,12 +27,15 @@ export default (app: Probot) => {
     const suggestions = "coucou ceci est une suggestion";
     console.log("Suggestions from ChatGPT:", suggestions);
 
-    // Poster les suggestions en tant que commentaire
-    const issueComment = context.issue({
+    // Répondre au commentaire existant
+    await context.octokit.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/comments/{comment_id}/replies', {
+      owner,
+      repo,
+      pull_number: pullNumber,
+      comment_id: commentId,
       body: `Suggestions de ChatGPT :\n${suggestions}`,
     });
-    await context.octokit.issues.createComment(issueComment);
-    console.log("Comment posted with suggestions");
+    console.log("Reply posted with suggestions");
   });
 
   // For more information on building apps:
